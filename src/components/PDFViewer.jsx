@@ -7,7 +7,7 @@ const PDFViewer = () => {
   const { selectedPdf } = useContext(AppContext);
     console.log(selectedPdf)
   return (
-    <div className="h-full border rounded-md overflow-hidden">
+    <div  className="h-full border rounded-md overflow-hidden">
       {selectedPdf ? (
         <Worker workerUrl="/pdf.worker.min.mjs">
           <Viewer
