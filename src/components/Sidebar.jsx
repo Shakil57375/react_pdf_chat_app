@@ -28,12 +28,12 @@ const Sidebar = () => {
   return (
     <div className="w-1/4 bg-gray-100 p-4">
       <h1 className="text-xl font-bold mb-4">Upload History</h1>
-      <ul className="mt-2">
+      <ul className="mt-2 ">
         {pdfFiles.length > 0 ? (
           pdfFiles.map((pdf, index) => (
             <li key={index} className="p-2 border-b flex justify-between items-center">
               {isEditing === index ? (
-                <div className="flex space-x-2">
+                <div className="flex space-x-2  ">
                   <input
                     type="text"
                     value={newName}
