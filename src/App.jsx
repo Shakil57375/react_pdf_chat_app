@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Sidebar from "./components/Sidebar.jsx";
 import PDFUploaderViewer from "./components/PDFUploaderViewer.jsx";
 import ChatInterface from "./components/ChatInterface.jsx";
@@ -9,18 +10,43 @@ const App = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // For toggling sidebar
   const [isChatOpen, setIsChatOpen] = useState(false); // For toggling chat interface
 
+  // Framer Motion Variants
+  const slideInLeft = {
+    hidden: { x: "-100%", opacity: 0 },
+    visible: { x: 0, opacity: 1 },
+    exit: { x: "-100%", opacity: 0 },
+  };
+
+  const slideInBottom = {
+    hidden: { y: "100%", opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+    exit: { y: "100%", opacity: 0 },
+  };
+
   return (
     <div className="flex h-screen">
       {/* Sidebar for Upload History */}
-      <div
-        className={`fixed lg:relative z-40 bg-gray-100 h-screen lg:h-auto ${
-          isSidebarOpen ? "w-2/3 sm:w-1/3" : "hidden"
-        } lg:block lg:w-1/5`}
-      >
-        <Sidebar closeSidebar={() => setIsSidebarOpen(false)} />
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={slideInLeft}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="fixed z-40 bg-white h-screen w-2/3 sm:w-1/3 lg:hidden shadow-2xl"
+          >
+            <Sidebar closeSidebar={() => setIsSidebarOpen(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar Visible Without Animation for Large Screens */}
+      <div className="hidden lg:block lg:w-1/5 h-screen bg-white">
+        <Sidebar />
       </div>
 
-      {/* Toggle Button for Sidebar (Mobile Only) */}
+      {/* Sidebar Toggle Button for Mobile Only */}
       <button
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         className="lg:hidden fixed top-5 left-5 z-50 bg-white text-gray-500 p-2 rounded-full shadow-xl"
@@ -34,15 +60,27 @@ const App = () => {
       </div>
 
       {/* Chat Interface */}
-      <div
-        className={`fixed bottom-0 right-0 z-40 bg-gray-200 h-2/3 w-4/5 sm:w-1/2 ${
-          isChatOpen ? "block" : "hidden"
-        } lg:block lg:w-1/5 lg:relative lg:h-auto`}
-      >
-        <ChatInterface closeChat={() => setIsChatOpen(false)} />
+      <AnimatePresence>
+        {isChatOpen && (
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={slideInBottom}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="fixed bottom-0 right-0 z-40 bg-gray-200 h-2/3 w-4/5 sm:w-1/2 lg:hidden shadow-xl"
+          >
+            <ChatInterface closeChat={() => setIsChatOpen(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Chat Interface Always Visible for Large Screens */}
+      <div className="hidden lg:block lg:w-1/5 h-screen bg-gray-200">
+        <ChatInterface />
       </div>
 
-      {/* Toggle Button for Chat Interface (Mobile Only) */}
+      {/* Chat Toggle Button for Mobile Only */}
       {!isChatOpen && (
         <button
           onClick={() => setIsChatOpen(true)}

@@ -1,7 +1,6 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { IoClose } from "react-icons/io5";
-import { MdSend } from "react-icons/md";
 import Loader from "./Loader";
 import { IoIosSend } from "react-icons/io";
 
