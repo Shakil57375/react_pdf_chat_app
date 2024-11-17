@@ -3,6 +3,7 @@ import { AppContext } from "../context/AppContext";
 import { IoClose } from "react-icons/io5";
 import { MdSend } from "react-icons/md";
 import Loader from "./Loader";
+import { IoIosSend } from "react-icons/io";
 
 // Chatbot image URL (replace with your actual image URL or import)
 const chatbotImage =
@@ -157,7 +158,7 @@ const ChatInterface = ({ closeChat }) => {
           onClick={handleSend}
           className="bg-blue-500 text-white p-2 rounded-r-lg flex items-center justify-center"
         >
-          <MdSend size={20} />
+          <IoIosSend size={20}  />
         </button>
       </div>
     </div>
